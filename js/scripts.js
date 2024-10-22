@@ -2,18 +2,18 @@
 let pokemonList = [
     {
         name:'Bulbasaur',
-        height: 7,
+        height: 0.7,
         types: ['grass','poison']
     },
     {
         name:'Pidgey',
-        height: 3,
+        height: 0.3,
         types: ['flying','normal']
 
     },
     {
         name:'Nidoking',
-        height: 14,
+        height: 1.4,
         types: ['ground','poison']
     }
 ];
