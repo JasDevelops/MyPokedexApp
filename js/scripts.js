@@ -18,15 +18,16 @@ let pokemonList = [
     }
 ];
 
-// for()-loop to iterate over each object within array
+// for()-loop to iterate over each object within array 
+// if height > 1 addition of highlight-text
 for (let i = 0; i < pokemonList.length; i++) {
-    if (pokemonList[i].height > 1) {
-        document.write(
-            pokemonList[i].name + " (height: " + pokemonList[i].height + ") - Wow, that's big!<br>"
-        );//highlights tallest Pokémon & displays name and height
-    } else {
-        document.write(
-            pokemonList[i].name + " (height: " + pokemonList[i].height + ")<br>"
-        );//default display of name and height
-    }
+    let name = pokemonList[i].name;
+    let height = pokemonList[i].height;
+
+    let text =
+        height > 1
+            ? `<span class="card__front--name">${name}</span> (height: ${height}) - Wow, that's big!`
+            : `<span class="card__front--name">${name}</span> (height: ${height})`;
+
+    document.write(`<div class="card__front">${text}</div>`);
 }
