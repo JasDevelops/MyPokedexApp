@@ -1,3 +1,4 @@
+// Array-list of Pokemons
 let pokemonList = [
     {
         name:'Bulbasaur',
@@ -16,3 +17,5 @@ let pokemonList = [
         types: ['ground','poison']
     }
 ];
+
+// for-loop to iterate over each object within array
