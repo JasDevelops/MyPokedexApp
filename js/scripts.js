@@ -18,7 +18,7 @@ let pokemonList = [
     }
 ];
 
-// for-loop to iterate over each object within array
+// for()-loop to iterate over each object within array
 for (let i = 0; i < pokemonList.length; i++) {
     document.write(
         pokemonList[i].name + " (height: " + pokemonList[i].height + ")<br>"
