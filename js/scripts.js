@@ -1,20 +1,20 @@
 // Array-list of Pokemons
 let pokemonList = [
     {
-        name:'Bulbasaur',
+        name: 'Bulbasaur',
         height: 0.7,
-        types: ['grass','poison']
+        types: ['grass', 'poison']
     },
     {
-        name:'Pidgey',
+        name: 'Pidgey',
         height: 0.3,
-        types: ['flying','normal']
+        types: ['flying', 'normal']
 
     },
     {
-        name:'Nidoking',
+        name: 'Nidoking',
         height: 1.4,
-        types: ['ground','poison']
+        types: ['ground', 'poison']
     }
 ];
 
