@@ -18,12 +18,10 @@ let pokemonList = [
     }
 ];
 
-// for()-loop to iterate over each object within array 
-// if height > 1 addition of highlight-text
-for (let i = 0; i < pokemonList.length; i++) {
-    let name = pokemonList[i].name;
-    let height = pokemonList[i].height;
-
+// forEach ()-loop to iterate over each object within array
+function PokemonDetailsLoop(pokemon) {
+    let name = pokemon.name;
+    let height = pokemon.height;
     let text =
         height > 1
             ? `<span class="card__front--name">${name}</span> (height: ${height}) - Wow, that's big!`
@@ -31,3 +29,5 @@ for (let i = 0; i < pokemonList.length; i++) {
 
     document.write(`<div class="card__front">${text}</div>`);
 }
+
+pokemonList.forEach(PokemonDetailsLoop);
