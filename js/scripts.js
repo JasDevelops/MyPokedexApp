@@ -38,9 +38,18 @@ let pokemonRepository = (function () {
             console.error('Please provide an object with name, height and type properties') // print error in console, if expectations were not met
         }
     }
+    // filter() - function : filter by name
+    function findName(nameList, nameSearched) {
+        return nameList.filter((pokemon) =>
+            pokemon.name.toLowerCase().includes(nameSearched.toLowerCase())
+        );
+
+    }
+    // make them accessible from outside of the function
     return {
         getAll: getAll,
-        add: add
+        add: add,
+        findName: findName
     }
 })();
 // forEach ()-loop to iterate over each object within array
