@@ -59,10 +59,11 @@ function PokemonDetailsLoop(details) {
 // filter() - function : filter by name
 function findName(nameList, nameSearched) {
     return nameList.filter((pokemon) =>
-    pokemon.name.toLowerCase().includes(nameSearched.toLowerCase())
+        pokemon.name.toLowerCase().includes(nameSearched.toLowerCase())
     );
 }
 
-// pokemonRepository.add({name: 'Butterfree', height: 1.1, type: ['bug','flying'] }); // check if add() works: Butterfree is added
-console.log(findName(pokemonRepository.getAll(), 'pidgey'));
+// pokemonRepository.add({name: 'Butterfree', height: 1.1, type: ['bug','flying'] }); // check if add() works
+// console.log(findName(pokemonRepository.getAll(), 'pidgey')); // check if filter() works
+
 pokemonRepository.getAll().forEach(PokemonDetailsLoop);
