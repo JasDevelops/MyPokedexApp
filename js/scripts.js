@@ -1,5 +1,5 @@
 // IIFE Array-list of Pokemons
-let pokemonRepository = (function (){
+let pokemonRepository = (function () {
     let pokemonList = [
         {
             name: 'Bulbasaur',
@@ -10,7 +10,7 @@ let pokemonRepository = (function (){
             name: 'Pidgey',
             height: 0.3,
             types: ['flying', 'normal']
-    
+
         },
         {
             name: 'Nidoking',
@@ -18,17 +18,17 @@ let pokemonRepository = (function (){
             types: ['ground', 'poison']
         }
     ];
-    function getAll (){
+    function getAll() {
         return pokemonList;
     }
-    function add (pokemon){
+    function add(pokemon) {
         pokemonList.push(pokemon);
     }
     return {
         getAll: getAll,
         add: add
     };
-    
+
 })();
 
 
