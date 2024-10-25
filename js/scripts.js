@@ -22,16 +22,25 @@ let pokemonRepository = (function () {
         return pokemonList;
     }
     function add(pokemon) {
-        pokemonList.push(pokemon);
+        let keysNeeded = ['name', 'height', 'types'];
+        if (
+            typeof pokemon === 'object' && // checks if item is an object
+            Object.keys(pokemon).length === keysNeeded.length && // checks if amount of keys in item is the same as the amount defined in keysNeeded
+            pokemon !== null && // prevent typeof null === 'object' quirk
+            pokemon.name !== undefined && // checks if name is defined
+            pokemon.height !== undefined && //checks if height is defined
+            pokemon.types !== undefined // checks if types is defined
+        ) {
+            pokemonList.push(pokemon); // add item if expectations are met
+        } else {
+            console.error('Please provide an object with name, height and types properties') // print error in console, if expectations were not met
+        }
     }
     return {
         getAll: getAll,
         add: add
-    };
-
+    }
 })();
-
-
 // forEach ()-loop to iterate over each object within array
 function PokemonDetailsLoop(details) {
     let name = details.name;
