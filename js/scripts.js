@@ -44,7 +44,13 @@ let pokemonRepository = (function () {
         add: add,
     }
 })();
-// forEach ()-loop to iterate over each object within array
+// filter() - function : filter by name
+function findName(nameList, nameSearched) {
+    return nameList.filter((addPokemon) =>
+        addPokemon.name.toLowerCase().includes(nameSearched.toLowerCase())
+    );
+}
+// Function to create list items with Pokémon details
 function PokemonDetailsLoop(details) {
     let name = details.name;
     let height = details.height;
@@ -54,14 +60,10 @@ function PokemonDetailsLoop(details) {
             : `<span class='card__front--name'>${name}</span> (height: ${height})`;
 
     document.write(`<div class='card__front'>${text}</div>`);
+
 }
 
-// filter() - function : filter by name
-function findName(nameList, nameSearched) {
-    return nameList.filter((addPokemon) =>
-        addPokemon.name.toLowerCase().includes(nameSearched.toLowerCase())
-    );
-}
+
 
 // pokemonRepository.add({name: 'Butterfree', height: 1.1, type: ['bug','flying'] }); // check if add() works
 // console.log(findName(pokemonRepository.getAll(), 'pidgey')); // check if filter() works
