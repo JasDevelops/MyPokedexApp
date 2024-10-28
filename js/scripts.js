@@ -23,17 +23,17 @@ let pokemonRepository = (function () {
         return pokemonList;
     }
     // add pokemon (items) if conditions are met
-    function add(pokemon) {
+    function add(addPokemon) {
         let keysNeeded = ['name', 'height', 'type'];
         if (
-            typeof pokemon === 'object' && // checks if item is an object
-            Object.keys(pokemon).length === keysNeeded.length && // checks if amount of keys in item is the same as the amount defined in keysNeeded
-            pokemon !== null && // prevent typeof null === 'object' quirk
-            pokemon.name !== undefined && // checks if name is defined
-            pokemon.height !== undefined && //checks if height is defined
-            pokemon.type !== undefined // checks if type is defined
+            typeof addPokemon === 'object' && // checks if item is an object
+            Object.keys(addPokemon).length === keysNeeded.length && // checks if amount of keys in item is the same as the amount defined in keysNeeded
+            addPokemon !== null && // prevent typeof null === 'object' quirk
+            addPokemon.name !== undefined && // checks if name is defined
+            addPokemon.height !== undefined && //checks if height is defined
+            addPokemon.type !== undefined // checks if type is defined
         ) {
-            pokemonList.push(pokemon); // add item if expectations are met
+            pokemonList.push(addPokemon); // add item if expectations are met
         } else {
             console.error('Please provide an object with name, height and type properties') // print error in console, if expectations were not met
         }
@@ -58,8 +58,8 @@ function PokemonDetailsLoop(details) {
 
 // filter() - function : filter by name
 function findName(nameList, nameSearched) {
-    return nameList.filter((pokemon) =>
-        pokemon.name.toLowerCase().includes(nameSearched.toLowerCase())
+    return nameList.filter((addPokemon) =>
+        addPokemon.name.toLowerCase().includes(nameSearched.toLowerCase())
     );
 }
 
