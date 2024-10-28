@@ -58,8 +58,14 @@ function PokemonDetailsLoop(details) {
         height > 1
             ? `<span class='card__front--name'>${name}</span> (height: ${height}) - Wow, that's big!`
             : `<span class='card__front--name'>${name}</span> (height: ${height})`;
-
-    document.write(`<div class='card__front'>${text}</div>`);
+            
+    let pokemonsList = document.querySelector('.pokemon-list'); 
+    let listItemPokemon = document.createElement('li');
+    let button = document.createElement('button');
+    button.innerText = name; // Text of Button is = name of Pokémon
+    button.classList.add ('button-class') // Add a class to the button for easier styling
+    listItemPokemon.appendChild(button); // Append button to list item 
+    pokemonsList.appendChild(listItemPokemon) // Append list item to ul
 
 }
 
