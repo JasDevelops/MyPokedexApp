@@ -38,10 +38,21 @@ let pokemonRepository = (function () {
             console.error('Please provide an object with name, height and type properties') // print error in console, if expectations were not met
         }
     }
+// Function to create list items with Pokémon details
+function addListItem(pokemon) {
+    let pokemonsList = document.querySelector('.pokemon-list'); 
+    let listItemPokemon = document.createElement('li');
+    let button = document.createElement('button');
+    button.innerText = pokemon.name; // Text of Button is = name of Pokémon
+    button.classList.add ('button-class') // Add a class to the button for easier styling
+    listItemPokemon.appendChild(button); // Append button to list item 
+    pokemonsList.appendChild(listItemPokemon) // Append list item to ul
+}
     // make them accessible from outside of the function
     return {
         getAll: getAll,
         add: add,
+        addListItem: addListItem
     }
 })();
 // filter() - function : filter by name
@@ -50,28 +61,8 @@ function findName(nameList, nameSearched) {
         addPokemon.name.toLowerCase().includes(nameSearched.toLowerCase())
     );
 }
-// Function to create list items with Pokémon details
-function PokemonDetailsLoop(details) {
-    let name = details.name;
-    let height = details.height;
-    let text =
-        height > 1
-            ? `<span class='card__front--name'>${name}</span> (height: ${height}) - Wow, that's big!`
-            : `<span class='card__front--name'>${name}</span> (height: ${height})`;
-            
-    let pokemonsList = document.querySelector('.pokemon-list'); 
-    let listItemPokemon = document.createElement('li');
-    let button = document.createElement('button');
-    button.innerText = name; // Text of Button is = name of Pokémon
-    button.classList.add ('button-class') // Add a class to the button for easier styling
-    listItemPokemon.appendChild(button); // Append button to list item 
-    pokemonsList.appendChild(listItemPokemon) // Append list item to ul
-
-}
-
+pokemonRepository.getAll().forEach(pokemonRepository.addListItem);
 
 
 // pokemonRepository.add({name: 'Butterfree', height: 1.1, type: ['bug','flying'] }); // check if add() works
 // console.log(findName(pokemonRepository.getAll(), 'pidgey')); // check if filter() works
-
-pokemonRepository.getAll().forEach(PokemonDetailsLoop);
