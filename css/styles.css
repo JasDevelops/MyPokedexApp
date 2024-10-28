@@ -23,10 +23,6 @@ body {
 	font-size: var(--text);
 	font-weight: 100;
 	background-color: var(--verywhite);
-	display: block;
-	max-width: 1200px;
-	width: 100%;
-	margin: 0 auto;
 	text-align: center;
 }
 
@@ -36,8 +32,13 @@ h1 {
 	text-align: right;
 	padding: 0 var(--standard-padding);
 }
+main {
+	max-width: 1200px;
+	width: 100%;
+	margin: 0 auto;
+}
   /* Header */
-  
+
 .page__header {
 	padding: var(--standard-padding);
 	background-color: var(--white);
@@ -47,26 +48,27 @@ h1 {
 .page__header--item {
 	max-width: 700px;
 }
-  /* Main */
 
-.card__front {
+  /* Main */
+.pokemon-list {
+	list-style-type: none;
+	padding: 0;
+}
+.pokemon-list li {
+	display: inline-block;
+	margin: 0 10px;
+}
+.button-class {
 	background-color: var(--blue);
 	padding: var(--standard-padding);
 	border: 10px solid var(--yellow);
 	text-align: center;
-	display: inline-block;
 	width: 250px;
 	vertical-align: middle;
 	min-height: 210px;
-	margin: var(--standard-margin);
-	color: var(--white);
-}
-
-.card__front--name {
 	font-family: var(--title);
 	font-size: var(--h2);
 	text-transform: uppercase;
-	display: block;
 	margin: var(--standard-margin) auto;
 	color: var(--yellow);
 	font-weight: 900;
@@ -75,18 +77,11 @@ h1 {
 /* Media Queries*/
 
 @media all and (max-width: 992px) {
-	.card__front {
-		margin: 10px;
-	}
+
 	.page__header--item {
 		max-width: 95%;
 	}
 	h1 {
 		text-align: center;
-	}
-}
-@media all and (max-width: 320px) {
-	.card__front {
-		width: 90%;
 	}
 }
