@@ -48,11 +48,18 @@ function addListItem(pokemon) {
     listItemPokemon.appendChild(button); // Append button to list item 
     pokemonsList.appendChild(listItemPokemon) // Append list item to ul
 }
-    // make them accessible from outside of the function
+
+// Function to show Pokémon details
+function showDetails (pokemon){
+    console.log(pokemon);
+}
+
+// make them accessible from outside of the function
     return {
         getAll: getAll,
         add: add,
-        addListItem: addListItem
+        addListItem: addListItem,
+        showDetails: showDetails
     }
 })();
 // filter() - function : filter by name
