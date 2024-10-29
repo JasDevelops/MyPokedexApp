@@ -72,7 +72,14 @@ main {
 	margin: var(--standard-margin) auto;
 	color: var(--yellow);
 	font-weight: 900;
+	cursor: pointer;
+	transition: border 0.2s ease, font-size 0.2s ease;
 }
+.button-class:hover,
+.button-class:focus {
+	border: 10px solid var(--blue);
+	font-size: 25px;
+} 
 
 /* Media Queries*/
 
