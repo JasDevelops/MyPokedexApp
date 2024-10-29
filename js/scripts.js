@@ -38,32 +38,32 @@ let pokemonRepository = (function () {
             console.error('Please provide an object with name, height and type properties') // print error in console, if expectations were not met
         }
     }
-// Function to add event listener to button
-function addListenerToButton (button, pokemon) {
-    button.addEventListener('click' , function() { // Event listener, that listens to 'click'
-        showDetails(pokemon); // Call showDetails()-function with pokemon as parameter
-    });
-}
-// Function to create list items with Pokémon details including a button that displays the name
-function addListItem(pokemon) {
-    let pokemonsList = document.querySelector('.pokemon-list'); 
-    let listItemPokemon = document.createElement('li');
-    let button = document.createElement('button');
+    // Function to add event listener to button
+    function addListenerToButton(button, pokemon) {
+        button.addEventListener('click', function () { // Event listener, that listens to 'click'
+            showDetails(pokemon); // Call showDetails()-function with pokemon as parameter
+        });
+    }
+    // Function to create list items with Pokémon details including a button that displays the name
+    function addListItem(pokemon) {
+        let pokemonsList = document.querySelector('.pokemon-list');
+        let listItemPokemon = document.createElement('li');
+        let button = document.createElement('button');
 
-    button.innerText = pokemon.name; // Text of Button is = name of Pokémon
-    button.classList.add ('button-class'); // Add a class to the button for easier styling
-    addListenerToButton(button,pokemon); // function addListenerTo Button is called and passed with the 2 arguments (button, pokemon)
+        button.innerText = pokemon.name; // Text of Button is = name of Pokémon
+        button.classList.add('button-class'); // Add a class to the button for easier styling
+        addListenerToButton(button, pokemon); // function addListenerTo Button is called and passed with the 2 arguments (button, pokemon)
 
-    listItemPokemon.appendChild(button); // Append button to list item 
-    pokemonsList.appendChild(listItemPokemon); // Append list item to ul
-}
+        listItemPokemon.appendChild(button); // Append button to list item 
+        pokemonsList.appendChild(listItemPokemon); // Append list item to ul
+    }
 
-// Function to show Pokémon details (pokemon as argument)
-function showDetails (pokemon){
-    console.log(pokemon);
-}
+    // Function to show Pokémon details (pokemon as argument)
+    function showDetails(pokemon) {
+        console.log(pokemon);
+    }
 
-// make them accessible from outside of the function
+    // make them accessible from outside of the function
     return {
         getAll: getAll,
         add: add,
