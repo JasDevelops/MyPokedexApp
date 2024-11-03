@@ -64,12 +64,7 @@ let pokemonRepository = (function () {
             console.error(e);
         })
     }
-    pokemonRepository.loadList().then(function () {
-        // Now the data is loaded!
-        pokemonRepository.getAll().forEach(function (pokemon) {
-            pokemonRepository.addListItem(pokemon);
-        });
-    });
+
     // function to load details for a given Pokémon
     function loadDetails(item) {
         let url = item.detailsUrl;
@@ -101,8 +96,11 @@ function findName(nameList, nameSearched) {
         addPokemon.name.toLowerCase().includes(nameSearched.toLowerCase())
     );
 }
-pokemonRepository.getAll().forEach(pokemonRepository.addListItem);
-
+pokemonRepository.loadList().then(function () {
+    pokemonRepository.getAll().forEach(function (pokemon) {
+        pokemonRepository.addListItem(pokemon);
+    });
+});
 
 // pokemonRepository.add({name: 'Butterfree', height: 1.1, type: ['bug','flying'] }); // check if add() works
 // console.log(findName(pokemonRepository.getAll(), 'pidgey')); // check if filter() works
