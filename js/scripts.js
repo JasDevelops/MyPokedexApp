@@ -1,23 +1,7 @@
 // IIFE Array-list of Pokemons
 let pokemonRepository = (function () {
-    let pokemonList = [
-        {
-            name: 'Bulbasaur',
-            height: 0.7,
-            type: ['grass', 'poison']
-        },
-        {
-            name: 'Pidgey',
-            height: 0.3,
-            type: ['flying', 'normal']
-
-        },
-        {
-            name: 'Nidoking',
-            height: 1.4,
-            type: ['ground', 'poison']
-        }
-    ];
+    let pokemonList = [];
+    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
     // create pokemonList accessible outside of the function
     function getAll() {
         return pokemonList;
