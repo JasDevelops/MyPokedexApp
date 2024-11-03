@@ -79,6 +79,21 @@ let pokemonRepository = (function () {
         });
     }
 
+    // show and hide loading message
+
+    function showLoadingMessage () {
+        let loadingMessage = document.createElement('p'); // creates <p> element
+        loadingMessage.innerText = 'Hold tight, Trainer! Rare finds take time!'; // sets the text to the created element
+        loadingMessage.classList.add ('loading-message'); // adds class for easier styling
+        document.body.appendChild(loadingMessage); // addsm element to body container    
+    }
+    function hideLoadingMessage() {
+        let loadingMessage = document.querySelector('.loading-message'); // finds element fint .loading-message class
+        if (loadingMessage) {
+            loadingMessage.remove(); // removes element from the DOM
+        }
+    }
+
     // make them accessible from outside of the function
     return {
         getAll: getAll,
