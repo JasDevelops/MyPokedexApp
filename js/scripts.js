@@ -14,7 +14,7 @@ let pokemonRepository = (function () {
         if (
             typeof addPokemon === 'object' && // checks if item is an object
             addPokemon !== null && // prevent typeof null === 'object' quirk
-            keysNeeded.every(keys => addPokemonKeys.includes(key)) // check if addPokemon has name and detailsUrl
+            keysNeeded.every(key => addPokemonKeys.includes(key)) // check if addPokemon has name and detailsUrl
         ) {
             pokemonList.push(addPokemon); // add item if expectations are met
         } else {
@@ -64,15 +64,15 @@ let pokemonRepository = (function () {
     }
 
     // function to load details for a given Pokémon
-    function loadDetails(item) {
-        let url = item.detailsUrl;
+    function loadDetails(pokemon) {
+        let url = pokemon.detailsUrl;
         return fetch(url).then(function (response) {
             return response.json();
         }).then(function (details) {
             // Now we add the details to the item
-            item.imageUrl = details.sprites.front_default;
-            item.height = details.height;
-            item.types = details.types;
+            pokemon.imageUrl = details.sprites.front_default;
+            pokemon.height = details.height;
+            pokemon.types = details.types;
         }).catch(function (e) {
             console.error(e);
         });
