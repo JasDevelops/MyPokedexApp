@@ -18,7 +18,7 @@ let pokemonRepository = (function () {
         ) {
             pokemonList.push(addPokemon); // add item if expectations are met
         } else {
-            console.error('Please provide an object with name and height properties') // print error in console, if expectations were not met
+            console.error('Please provide an object with name and detailsUrl properties') // print error in console, if expectations were not met
         }
     }
     // Function to add event listener to button
@@ -87,14 +87,14 @@ let pokemonRepository = (function () {
 
     // show and hide loading message
 
-    function showLoadingMessage () {
+    function showLoadingMessage() {
         let loadingMessage = document.createElement('p'); // creates <p> element
         loadingMessage.innerText = 'Hold tight, Trainer! Rare finds take time!'; // sets the text to the created element
-        loadingMessage.classList.add ('loading-message'); // adds class for easier styling
-        document.body.appendChild(loadingMessage); // addsm element to body container    
+        loadingMessage.classList.add('loading-message'); // adds class for easier styling
+        document.body.appendChild(loadingMessage); // adds element to body container    
     }
     function hideLoadingMessage() {
-        let loadingMessage = document.querySelector('.loading-message'); // finds element fint .loading-message class
+        let loadingMessage = document.querySelector('.loading-message'); // finds element with .loading-message class
         if (loadingMessage) {
             loadingMessage.remove(); // removes element from the DOM
         }
