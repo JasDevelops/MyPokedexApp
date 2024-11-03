@@ -9,14 +9,12 @@ let pokemonRepository = (function () {
     }
     // add pokemon (items) if conditions are met
     function add(addPokemon) {
-        let keysNeeded = ['name', 'height', 'type'];
+        let keysNeeded = ['name', 'detailsUrl'];
+        let addPokemonKeys = Object.keys(addPokemon);
         if (
             typeof addPokemon === 'object' && // checks if item is an object
-            Object.keys(addPokemon).length === keysNeeded.length && // checks if amount of keys in item is the same as the amount defined in keysNeeded
             addPokemon !== null && // prevent typeof null === 'object' quirk
-            addPokemon.name !== undefined && // checks if name is defined
-            addPokemon.height !== undefined && //checks if height is defined
-            addPokemon.type !== undefined // checks if type is defined
+            keysNeeded.every(keys => addPokemonKeys.includes(key)) // check if addPokemon has name and detailsUrl
         ) {
             pokemonList.push(addPokemon); // add item if expectations are met
         } else {
