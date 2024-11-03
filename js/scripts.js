@@ -70,14 +70,17 @@ let pokemonRepository = (function () {
 
     // function to load details for a given Pokémon
     function loadDetails(pokemon) {
+        showLoadingMessage(); // shows loading message
         let url = pokemon.detailsUrl;
         return fetch(url).then(function (response) {
+            hideLoadingMessage(); // hides loading message once response received
             return response.json();
         }).then(function (details) {
             // Now we add the details to the item
             pokemon.imageUrl = details.sprites.front_default;
             pokemon.height = details.height;
         }).catch(function (e) {
+            hideLoadingMessage(); // hide loading message in case of error
             console.error(e);
         });
     }
