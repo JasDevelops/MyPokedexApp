@@ -18,7 +18,7 @@ let pokemonRepository = (function () {
         ) {
             pokemonList.push(addPokemon); // add item if expectations are met
         } else {
-            console.error('Please provide an object with name, height and type properties') // print error in console, if expectations were not met
+            console.error('Please provide an object with name and height properties') // print error in console, if expectations were not met
         }
     }
     // Function to add event listener to button
@@ -44,9 +44,9 @@ let pokemonRepository = (function () {
     // Function to show Pokémon details (pokemon as argument)
     function showDetails(pokemon) {
         loadDetails(pokemon).then(function () {
-        console.log(pokemon);
-    });
-}
+            console.log(pokemon);
+        });
+    }
 
     // Function to fetch list of Pokémon from API
     function loadList() {
@@ -62,7 +62,7 @@ let pokemonRepository = (function () {
             });
         }).catch(function (e) {
             console.error(e);
-        })
+        });
     }
 
     // function to load details for a given Pokémon
