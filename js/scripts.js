@@ -43,8 +43,10 @@ let pokemonRepository = (function () {
 
     // Function to show Pokémon details (pokemon as argument)
     function showDetails(pokemon) {
+        loadDetails(pokemon).then(function () {
         console.log(pokemon);
-    }
+    });
+}
 
     // Function to fetch list of Pokémon from API
     function loadList() {
