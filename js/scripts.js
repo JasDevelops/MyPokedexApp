@@ -72,7 +72,6 @@ let pokemonRepository = (function () {
             // Now we add the details to the item
             pokemon.imageUrl = details.sprites.front_default;
             pokemon.height = details.height;
-            pokemon.types = details.types;
         }).catch(function (e) {
             console.error(e);
         });
