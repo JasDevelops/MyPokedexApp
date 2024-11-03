@@ -50,7 +50,9 @@ let pokemonRepository = (function () {
 
     // Function to fetch list of Pokémon from API
     function loadList() {
+        showLoadingMessage(); // shows loading message
         return fetch(apiUrl).then(function (response) {
+            hideLoadingMessage(); // hides loading message once response received
             return response.json();
         }).then(function (json) {
             json.results.forEach(function (item) {
@@ -61,6 +63,7 @@ let pokemonRepository = (function () {
                 add(pokemon);
             });
         }).catch(function (e) {
+            hideLoadingMessage(); // hide loading message in case of error
             console.error(e);
         });
     }
