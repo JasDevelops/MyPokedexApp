@@ -113,8 +113,8 @@ let pokemonRepository = (function () {
 
 // Modal IIFE to show/hide modal with Pokémons name, height and image 
 let modal = (function () {
+    let modalContainer = document.querySelector('#modal-container'); // select modal container in the DOM
     function showModal(title, height, imageUrl) { // show modal
-        let modalContainer = document.querySelector('#modal-container'); // select modal container in the DOM
         modalContainer.innerHTML = ''; // clear existing content in modal
 
         let modal = document.createElement('div'); // create modal div
