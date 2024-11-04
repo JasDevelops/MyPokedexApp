@@ -73,7 +73,8 @@ main {
 }
 
 .modal img {
-	width: 200px;
+	max-width: 200px;
+	margin: 0 auto;
 }
 
 .modal button {
