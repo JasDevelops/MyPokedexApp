@@ -32,60 +32,69 @@ h1 {
 	text-align: right;
 	padding: 0 var(--standard-padding);
 }
+
 main {
 	max-width: 1200px;
 	width: 100%;
 	margin: 0 auto;
 }
 
-  /* Modal */
+/* Modal */
 #modal-container {
-	display:none;
+	display: none;
 }
+
 #modal-container.is-visible {
-	display:grid;
-	text-align:center;
-	position:fixed;
-	top:0;
-	left:0;
+	display: grid;
+	text-align: center;
+	position: fixed;
+	top: 0;
+	left: 0;
 	z-index: 999;
-	overflow:auto;
+	overflow: auto;
 	width: 100%;
-	height:100%;
+	height: 100%;
 	background-color: rgba(255, 208, 20, 0.98);
 }
+
 .modal {
 	background-color: var(--verywhite);
 	margin: 10%;
-	border:
 }
+
 .modal h1 {
-	text-align:center;
+	text-align: center;
 	font-family: var(--title);
 	color: var(--blue);
 }
+
 .modal p {
 	color: var(--blue);
 }
+
 .modal img {
 	width: 200px;
 }
+
 .modal button {
 	background-color: var(--blue);
 	border: 2px solid var(--yellow);
 	color: var(--yellow);
 	border-radius: 5px;
 	margin: 20px auto;
-	cursor:pointer;
+	cursor: pointer;
 }
+
 .modal button:hover,
 .modal button:focus {
 	color: var(--white);
 }
+
 .modal button:active {
 	opacity: 0.7;
 }
-  /* Header */
+
+/* Header */
 
 .page__header {
 	padding: var(--standard-padding);
@@ -97,15 +106,17 @@ main {
 	max-width: 700px;
 }
 
-  /* Main */
+/* Main */
 .pokemon-list {
 	list-style-type: none;
 	padding: 0;
 }
+
 .pokemon-list li {
 	display: inline-block;
 	margin: 0 10px;
 }
+
 .button-class {
 	background-color: var(--blue);
 	padding: var(--standard-padding);
@@ -123,11 +134,12 @@ main {
 	cursor: pointer;
 	transition: border 0.2s ease, font-size 0.2s ease;
 }
+
 .button-class:hover,
 .button-class:focus {
 	border: 10px solid var(--blue);
 	font-size: 25px;
-} 
+}
 
 /* Media Queries*/
 
@@ -136,6 +148,7 @@ main {
 	.page__header--item {
 		max-width: 95%;
 	}
+
 	h1 {
 		text-align: center;
 	}
