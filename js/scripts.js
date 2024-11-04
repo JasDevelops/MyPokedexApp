@@ -110,6 +110,59 @@ let pokemonRepository = (function () {
         loadDetails: loadDetails
     }
 })();
+
+// Modal IIFE to show/hide modal with Pokémons name, height and image 
+let modal = (function () {
+    function showModal(title, height, imageUrl) { // show modal
+        let modalContainer = document.querySelector('#modal-container'); // select modal container in the DOM
+        modalContainer.innerHTML = ''; // clear existing content in modal
+
+        let modal = document.createElement('div'); // create modal div
+        modal.classList.add('modal';) // add 'modal'- class for easier styling
+
+        let closeButtonElement = document.createElement('button'); // create close button
+        closeButtonElement.classList.add('modal-close'); // add 'modal-close' - class for easier styling
+        closeButtonElement.innerText = 'Close'; // set text of button
+        closeButtonElement.addEventListener('click', hideModal); // closes modal on click
+
+        let titleElement = document.createElement('h1'); // create h1
+        titleElement.innerText = title; // sets modal title text
+
+        let contentElement = document.createElement ('p'); // creates p
+        contentElement.innerText = ` Height: ${height}`; // sets modal content text
+
+        let imageElement = document.createElement ('img'); // create img
+        imageElement.src = imageUrl; // defines source of image
+        imageElement.alt = `${title} image`; // defines alt-tag of image
+
+        //Append all elements to modal and modal container
+        modal.appendChild(closeButtonElement);
+        modal.appendChild(titleElement);
+        modal.appendChild(contentElement);
+        modal.appendChild(imageElement);
+        modalContainer.appendChild(modal);
+
+        modalContainer.classList.add('is-visible'); // makes modal visible
+    }
+    function hideModal () { // hide modal
+        modalContainer.classList.remove('is-visible');
+    }
+    window.addEventListener('keydown', (e) => { // hide when ESC-key is pressed
+        if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
+            hideModal();
+        }
+    });
+    modalContainer.addEventListener('click', (e) => { // hide when clicked outside of modal
+        let target = e.target;
+        if (target === modalContainer) {
+            hideModal();
+        }
+    });
+    return {
+        showModal: showModal
+    };
+}) ();
+
 // filter() - function : filter by name
 function findName(nameList, nameSearched) {
     return nameList.filter((addPokemon) =>
