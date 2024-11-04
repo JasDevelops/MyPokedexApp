@@ -118,7 +118,7 @@ let modal = (function () {
         modalContainer.innerHTML = ''; // clear existing content in modal
 
         let modal = document.createElement('div'); // create modal div
-        modal.classList.add('modal';) // add 'modal'- class for easier styling
+        modal.classList.add('modal'); // add 'modal'- class for easier styling
 
         let closeButtonElement = document.createElement('button'); // create close button
         closeButtonElement.classList.add('modal-close'); // add 'modal-close' - class for easier styling
