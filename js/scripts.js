@@ -43,8 +43,10 @@ let pokemonRepository = (function () {
 
     // Function to show Pokémon details (pokemon as argument)
     function showDetails(pokemon) {
+        let pokemonList = getAll();
+        let index = pokemonList.indexOf(pokemon);
         loadDetails(pokemon).then(function () {
-            modal.showModal(pokemon.name, pokemon.height, pokemon.imageUrl);
+            modal.showModal(pokemon.name, pokemon.height, pokemon.imageUrl, index);
         });
     }
 
@@ -86,7 +88,6 @@ let pokemonRepository = (function () {
     }
 
     // show and hide loading message
-
     function showLoadingMessage() {
         let loadingMessage = document.createElement('p'); // creates <p> element
         loadingMessage.innerText = 'Hold tight, Trainer! Rare finds take time!'; // sets the text to the created element
@@ -114,8 +115,12 @@ let pokemonRepository = (function () {
 // Modal IIFE to show/hide modal with Pokémons name, height and image 
 let modal = (function () {
     let modalContainer = document.querySelector('#modal-container'); // select modal container in the DOM
-    function showModal(title, height, imageUrl) { // show modal
+    let startX = 0;
+    let currentIndex = 0; // current displayed Pokémon index
+    
+    function showModal(title, height, imageUrl, index) { // show modal
         modalContainer.innerHTML = ''; // clear existing content in modal
+        currentIndex = index; // sets current Pokémon index
 
         let modal = document.createElement('div'); // create modal div
         modal.classList.add('modal'); // add 'modal'- class for easier styling
@@ -143,9 +148,45 @@ let modal = (function () {
         modalContainer.appendChild(modal);
 
         modalContainer.classList.add('is-visible'); // makes modal visible
+
+        // swipe event listeners
+        modalContainer.addEventListener('pointerdown', handlePointerDown); 
+        modalContainer.addEventListener('pointerup',handlePointerUp); 
     }
-    function hideModal () { // hide modal
+    
+    function hideModal() {
         modalContainer.classList.remove('is-visible');
+
+        // Remove event listeners to prevent duplicates
+        modalContainer.removeEventListener('pointerdown', handlePointerDown);
+        modalContainer.removeEventListener('pointerup', handlePointerUp);
+    }
+
+    function handlePointerDown(event) {
+        startX = event.clientX; // Record the starting X position
+    }
+
+    function handlePointerUp(event) {
+        let endX = event.clientX;
+        let threshold = 50; // Minimum swipe distance
+
+        if (endX < startX - threshold) {
+            showNextPokemon(); // Swipe left to show the next Pokémon
+        } else if (endX > startX + threshold) {
+            showPreviousPokemon(); // Swipe right to show the previous Pokémon
+        }
+    }
+
+    function showNextPokemon() {
+        let nextIndex = (currentIndex + 1) % pokemonRepository.getAll().length;
+        let nextPokemon = pokemonRepository.getAll()[nextIndex];
+        pokemonRepository.showDetails(nextPokemon); // Reuse showDetails to update modal
+    }
+
+    function showPreviousPokemon() {
+        let prevIndex = (currentIndex - 1 + pokemonRepository.getAll().length) % pokemonRepository.getAll().length;
+        let prevPokemon = pokemonRepository.getAll()[prevIndex];
+        pokemonRepository.showDetails(prevPokemon); // Reuse showDetails to update modal
     }
     window.addEventListener('keydown', (e) => { // hide when ESC-key is pressed
         if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
