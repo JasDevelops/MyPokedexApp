@@ -117,7 +117,7 @@ let modal = (function () {
     let modalContainer = document.querySelector('#modal-container'); // select modal container in the DOM
     let startX = 0;
     let currentIndex = 0; // current displayed Pokémon index
-    
+
     function showModal(title, height, imageUrl, index) { // show modal
         modalContainer.innerHTML = ''; // clear existing content in modal
         currentIndex = index; // sets current Pokémon index
@@ -133,10 +133,10 @@ let modal = (function () {
         let titleElement = document.createElement('h1'); // create h1
         titleElement.innerText = title; // sets modal title text
 
-        let contentElement = document.createElement ('p'); // creates p
+        let contentElement = document.createElement('p'); // creates p
         contentElement.innerText = ` Height: ${height}`; // sets modal content text
 
-        let imageElement = document.createElement ('img'); // create img
+        let imageElement = document.createElement('img'); // create img
         imageElement.src = imageUrl; // defines source of image
         imageElement.alt = `${title} image`; // defines alt-tag of image
 
@@ -150,10 +150,10 @@ let modal = (function () {
         modalContainer.classList.add('is-visible'); // makes modal visible
 
         // swipe event listeners
-        modalContainer.addEventListener('pointerdown', handlePointerDown); 
-        modalContainer.addEventListener('pointerup',handlePointerUp); 
+        modalContainer.addEventListener('pointerdown', handlePointerDown);
+        modalContainer.addEventListener('pointerup', handlePointerUp);
     }
-    
+
     function hideModal() {
         modalContainer.classList.remove('is-visible');
 
@@ -202,7 +202,7 @@ let modal = (function () {
     return {
         showModal: showModal
     };
-}) ();
+})();
 
 // filter() - function : filter by name
 function findName(nameList, nameSearched) {
