@@ -34,13 +34,10 @@ let pokemonRepository = (function () {
         let button = document.createElement('button');
 
         button.innerText = pokemon.name; // Text of Button is = name of Pokémon
-        button.classList.add('button-class'); // Add a class to the button for easier styling
-        addListenerToButton(button, pokemon); // function addListenerTo Button is called and passed with the 2 arguments (button, pokemon)
-        
-        button.classList.add('list-group-item', 'list-group-item-action'); // Add list-group class to list
+        button.classList.add('button-class', 'list-group-item', 'list-group-item-action', 'btn', 'btn-primary'); // Add list-group class to list
         listItemPokemon.classList.add('list-group'); // Add list-group-item-class to list
-
-        button.classList.add('btn', 'btn-primary'); // Add Bootstrap button classes
+        
+        addListenerToButton(button, pokemon); // function addListenerTo Button is called and passed with the 2 arguments (button, pokemon)
 
         listItemPokemon.appendChild(button); // Append button to list item 
         pokemonsList.appendChild(listItemPokemon); // Append list item to ul
@@ -123,41 +120,60 @@ let modal = (function () {
 
     function showModal(title, height, imageUrl, index) { // show modal
 
-    let modalTitle = document.querySelector('.modal-title'); // find modal title
-    let modalBody = document.querySelector('.modal-body'); // find modal body
+        let modalTitle = document.querySelector('.modal-title'); // find modal title
+        let modalBody = document.querySelector('.modal-body'); // find modal body
 
-    modalTitle.innerText = title;
-    modalBody.innerHTML = `
+        modalTitle.innerText = title;
+        modalBody.innerHTML = `
     <p>Height: ${height}</p>
     <img src="${imageUrl}" alt="${title}">
     `;
-    currentIndex = index; // Track current Pokémon index
-    
-    $('#pokemonModal').modal('show'); // Bootstrap function to show modal
+        currentIndex = index; // Track current Pokémon index
+
+        $('#pokemonModal').modal('show'); // Bootstrap function to show modal
     }
 
+    //swipe functionality
     function showNextPokemon() {
         let nextIndex = (currentIndex + 1) % pokemonRepository.getAll().length;
         let nextPokemon = pokemonRepository.getAll()[nextIndex];
-        pokemonRepository.showDetails(nextPokemon); // Reuse showDetails to update modal
+        pokemonRepository.showDetails(nextPokemon, nextIndex); // Reuse showDetails to update modal
     }
 
     function showPreviousPokemon() {
         let prevIndex = (currentIndex - 1 + pokemonRepository.getAll().length) % pokemonRepository.getAll().length;
         let prevPokemon = pokemonRepository.getAll()[prevIndex];
-        pokemonRepository.showDetails(prevPokemon); // Reuse showDetails to update modal
+        pokemonRepository.showDetails(prevPokemon, prevIndex); // Reuse showDetails to update modal
     }
-    window.addEventListener('keydown', (e) => { // hide when ESC-key is pressed
-        if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
-            hideModal();
+
+    let startX;
+    function handlePointerDown(event) {
+        startX = event.clientX;
+    }
+    function handlePointerUp(event) {
+        let endX = event.clientX;
+        let threshold = 50; // Minimum swipe distance
+        if (endX < startX - threshold) {
+            showNextPokemon();
+        } else if (endX > startX + threshold) {
+            showPreviousPokemon();
         }
-    });
-    modalContainer.addEventListener('click', (e) => { // hide when clicked outside of modal
-        let target = e.target;
-        if (target === modalContainer) {
-            hideModal();
+    }
+    // close when ESC-key is pressed
+    function closeOnEscape(event) {
+        if (event.key === 'Escape' && $('#pokemonModal').hasClass('show')) {
+            $('#pokemonModal').modal('hide');
         }
-    });
+    }
+    // Add swipe and ESC event listeners
+    function addEventListeners() {
+        document.querySelector('.modal').addEventListener('pointerdown', handlePointerDown);
+        document.querySelector('.modal').addEventListener('pointerup', handlePointerUp);
+        window.addEventListener('keydown', closeOnEscape);
+    }
+    // close when clicked-outside 
+    addEventListeners();
+
     return {
         showModal: showModal
     };
