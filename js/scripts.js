@@ -36,6 +36,9 @@ let pokemonRepository = (function () {
         button.innerText = pokemon.name; // Text of Button is = name of Pokémon
         button.classList.add('button-class'); // Add a class to the button for easier styling
         addListenerToButton(button, pokemon); // function addListenerTo Button is called and passed with the 2 arguments (button, pokemon)
+        
+        button.classList.add('list-group-item', 'list-group-item-action'); // Add list-group class to list
+        listItemPokemon.classList.add('list-group'); // Add list-group-item-class to list
 
         listItemPokemon.appendChild(button); // Append button to list item 
         pokemonsList.appendChild(listItemPokemon); // Append list item to ul
