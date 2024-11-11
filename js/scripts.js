@@ -40,6 +40,8 @@ let pokemonRepository = (function () {
         button.classList.add('list-group-item', 'list-group-item-action'); // Add list-group class to list
         listItemPokemon.classList.add('list-group'); // Add list-group-item-class to list
 
+        button.classList.add('btn', 'btn-primary'); // Add Bootstrap button classes
+
         listItemPokemon.appendChild(button); // Append button to list item 
         pokemonsList.appendChild(listItemPokemon); // Append list item to ul
     }
