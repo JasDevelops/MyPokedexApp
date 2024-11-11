@@ -115,11 +115,10 @@ let pokemonRepository = (function () {
 })();
 
 // Bootstrap Modal IIFE to show/hide modal with Pokémons name, height and image 
-let modal = (function () {
+    let modal = (function () {
     let currentIndex = 0; // current displayed Pokémon index
 
     function showModal(title, height, imageUrl, index) { // show modal
-
         let modalTitle = document.querySelector('.modal-title'); // find modal title
         let modalBody = document.querySelector('.modal-body'); // find modal body
 
@@ -137,25 +136,25 @@ let modal = (function () {
     function showNextPokemon() {
         let nextIndex = (currentIndex + 1) % pokemonRepository.getAll().length;
         let nextPokemon = pokemonRepository.getAll()[nextIndex];
-        pokemonRepository.showDetails(nextPokemon, nextIndex); // Reuse showDetails to update modal
+        pokemonRepository.showDetails(nextPokemon); // Reuse showDetails to update modal
     }
 
     function showPreviousPokemon() {
         let prevIndex = (currentIndex - 1 + pokemonRepository.getAll().length) % pokemonRepository.getAll().length;
         let prevPokemon = pokemonRepository.getAll()[prevIndex];
-        pokemonRepository.showDetails(prevPokemon, prevIndex); // Reuse showDetails to update modal
+        pokemonRepository.showDetails(prevPokemon); // Reuse showDetails to update modal
     }
 
-    let startX;
     function handlePointerDown(event) {
-        startX = event.clientX;
+        this.startX = event.clientX;
     }
+
     function handlePointerUp(event) {
         let endX = event.clientX;
-        let threshold = 50; // Minimum swipe distance
-        if (endX < startX - threshold) {
+        let threshold = 50;
+        if (endX < this.startX - threshold) {
             showNextPokemon();
-        } else if (endX > startX + threshold) {
+        } else if (endX > this.startX + threshold) {
             showPreviousPokemon();
         }
     }
@@ -166,13 +165,22 @@ let modal = (function () {
         }
     }
     // Add swipe and ESC event listeners
-    function addEventListeners() {
-        document.querySelector('.modal').addEventListener('pointerdown', handlePointerDown);
-        document.querySelector('.modal').addEventListener('pointerup', handlePointerUp);
+    function addModalEventListeners() {
+        const modal = document.querySelector('.modal');
+        modal.addEventListener('pointerdown', handlePointerDown);
+        modal.addEventListener('pointerup', handlePointerUp);
         window.addEventListener('keydown', closeOnEscape);
     }
-    // close when clicked-outside 
-    addEventListeners();
+
+    function removeModalEventListeners() {
+        const modal = document.querySelector('.modal');
+        modal.removeEventListener('pointerdown', handlePointerDown);
+        modal.removeEventListener('pointerup', handlePointerUp);
+        window.removeEventListener('keydown', closeOnEscape);
+    }
+
+    $('#pokemonModal').on('shown.bs.modal', addModalEventListeners);
+    $('#pokemonModal').on('hidden.bs.modal', removeModalEventListeners);
 
     return {
         showModal: showModal
@@ -190,6 +198,3 @@ pokemonRepository.loadList().then(function () {
         pokemonRepository.addListItem(pokemon);
     });
 });
-
-// pokemonRepository.add({name: 'Butterfree', height: 1.1, type: ['bug','flying'] }); // check if add() works
-// console.log(findName(pokemonRepository.getAll(), 'pidgey')); // check if filter() works
