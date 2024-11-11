@@ -117,69 +117,23 @@ let pokemonRepository = (function () {
     }
 })();
 
-// Modal IIFE to show/hide modal with Pokémons name, height and image 
+// Bootstrap Modal IIFE to show/hide modal with Pokémons name, height and image 
 let modal = (function () {
-    let modalContainer = document.querySelector('#modal-container'); // select modal container in the DOM
-    let startX = 0;
     let currentIndex = 0; // current displayed Pokémon index
 
     function showModal(title, height, imageUrl, index) { // show modal
-        modalContainer.innerHTML = ''; // clear existing content in modal
-        currentIndex = index; // sets current Pokémon index
 
-        let modal = document.createElement('div'); // create modal div
-        modal.classList.add('modal'); // add 'modal'- class for easier styling
+    let modalTitle = document.querySelector('.modal-title'); // find modal title
+    let modalBody = document.querySelector('.modal-body'); // find modal body
 
-        let closeButtonElement = document.createElement('button'); // create close button
-        closeButtonElement.classList.add('modal-close'); // add 'modal-close' - class for easier styling
-        closeButtonElement.innerText = 'Close'; // set text of button
-        closeButtonElement.addEventListener('click', hideModal); // closes modal on click
-
-        let titleElement = document.createElement('h1'); // create h1
-        titleElement.innerText = title; // sets modal title text
-
-        let contentElement = document.createElement('p'); // creates p
-        contentElement.innerText = ` Height: ${height}`; // sets modal content text
-
-        let imageElement = document.createElement('img'); // create img
-        imageElement.src = imageUrl; // defines source of image
-        imageElement.alt = `${title} image`; // defines alt-tag of image
-
-        //Append all elements to modal and modal container
-        modal.appendChild(closeButtonElement);
-        modal.appendChild(titleElement);
-        modal.appendChild(contentElement);
-        modal.appendChild(imageElement);
-        modalContainer.appendChild(modal);
-
-        modalContainer.classList.add('is-visible'); // makes modal visible
-
-        // swipe event listeners
-        modalContainer.addEventListener('pointerdown', handlePointerDown);
-        modalContainer.addEventListener('pointerup', handlePointerUp);
-    }
-
-    function hideModal() {
-        modalContainer.classList.remove('is-visible');
-
-        // Remove event listeners to prevent duplicates
-        modalContainer.removeEventListener('pointerdown', handlePointerDown);
-        modalContainer.removeEventListener('pointerup', handlePointerUp);
-    }
-
-    function handlePointerDown(event) {
-        startX = event.clientX; // Record the starting X position
-    }
-
-    function handlePointerUp(event) {
-        let endX = event.clientX;
-        let threshold = 50; // Minimum swipe distance
-
-        if (endX < startX - threshold) {
-            showNextPokemon(); // Swipe left to show the next Pokémon
-        } else if (endX > startX + threshold) {
-            showPreviousPokemon(); // Swipe right to show the previous Pokémon
-        }
+    modalTitle.innerText = title;
+    modalBody.innerHTML = `
+    <p>Height: ${height}</p>
+    <img src="${imageUrl}" alt="${title}">
+    `;
+    currentIndex = index; // Track current Pokémon index
+    
+    $('#pokemonModal').modal('show'); // Bootstrap function to show modal
     }
 
     function showNextPokemon() {
