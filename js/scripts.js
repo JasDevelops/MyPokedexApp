@@ -183,7 +183,9 @@ let pokemonRepository = (function () {
     $('#pokemonModal').on('hidden.bs.modal', removeModalEventListeners);
 
     return {
-        showModal: showModal
+        showModal: showModal,
+        showNextPokemon: showNextPokemon,  
+        showPreviousPokemon: showPreviousPokemon
     };
 })();
 
