@@ -39,30 +39,6 @@ main {
 	margin: 0 auto;
 }
 
-
-/* Header */
-
-.page__header {
-	padding: var(--standard-padding);
-	background-color: var(--white);
-	border-bottom: 5px solid var(--black);
-}
-
-.page__header--item {
-	max-width: 700px;
-}
-
-/* Main */
-.pokemon-list {
-	list-style-type: none;
-	padding: 0;
-}
-
-.pokemon-list li {
-	display: inline-block;
-	margin: 0 10px;
-}
-
 .button-class {
 	background-color: var(--blue);
 	padding: var(--standard-padding);
@@ -90,11 +66,6 @@ main {
 /* Media Queries*/
 
 @media all and (max-width: 992px) {
-
-	.page__header--item {
-		max-width: 95%;
-	}
-
 	h1 {
 		text-align: center;
 	}
