@@ -36,8 +36,11 @@ let pokemonRepository = (function () {
         button.innerText = pokemon.name; // Text of Button is = name of Pokémon
         button.classList.add('button-class', 'list-group-item', 'list-group-item-action', 'btn', 'btn-primary'); // Add list-group class to list
         listItemPokemon.classList.add('list-group'); // Add list-group-item-class to list
-        
+
         addListenerToButton(button, pokemon); // function addListenerTo Button is called and passed with the 2 arguments (button, pokemon)
+
+        button.setAttribute('data-toggle', 'modal');
+        button.setAttribute('data-target', '#pokemonModal');
 
         listItemPokemon.appendChild(button); // Append button to list item 
         pokemonsList.appendChild(listItemPokemon); // Append list item to ul
@@ -115,7 +118,7 @@ let pokemonRepository = (function () {
 })();
 
 // Bootstrap Modal IIFE to show/hide modal with Pokémons name, height and image 
-    let modal = (function () {
+let modal = (function () {
     let currentIndex = 0; // current displayed Pokémon index
 
     function showModal(title, height, imageUrl, index) { // show modal
@@ -184,7 +187,7 @@ let pokemonRepository = (function () {
 
     return {
         showModal: showModal,
-        showNextPokemon: showNextPokemon,  
+        showNextPokemon: showNextPokemon,
         showPreviousPokemon: showPreviousPokemon
     };
 })();
