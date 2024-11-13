@@ -45,14 +45,13 @@ main {
 }
 
 .pokemon-list {
-	padding-left: 0;
+	padding-left: 15px;
 }
 .button-class {
 	background-color: var(--blue);
 	padding: var(--standard-padding);
 	border: 10px solid var(--yellow);
 	text-align: center;
-	width: 250px;
 	vertical-align: middle;
 	min-height: 210px;
 	font-family: var(--title);

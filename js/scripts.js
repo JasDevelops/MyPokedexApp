@@ -29,13 +29,13 @@ let pokemonRepository = (function () {
     }
     // Function to create list items with Pokémon details including a button that displays the name
     function addListItem(pokemon) {
-        let pokemonsList = document.querySelector('.pokemon-list');
-        let listItemPokemon = document.createElement('li');
-        let button = document.createElement('button');
+        let pokemonsList = document.querySelector('.pokemon-list'); // ul-element
+        let listItemPokemon = document.createElement('li'); // li-element
+        let button = document.createElement('button'); // button for aech pokémon
 
         button.innerText = pokemon.name; // Text of Button is = name of Pokémon
         button.classList.add('button-class', 'list-group-item', 'list-group-item-action', 'btn', 'btn-primary'); // Add list-group class to list
-        listItemPokemon.classList.add('list-group'); // Add list-group-item-class to list
+        listItemPokemon.classList.add('list-group', 'col-lg-4', 'col-md-6', 'col-12'); // Add list-group-item-class to list, 3 col for large, 2 for medium, 1 for small screens
 
         addListenerToButton(button, pokemon); // function addListenerTo Button is called and passed with the 2 arguments (button, pokemon)
 

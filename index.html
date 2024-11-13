@@ -44,7 +44,9 @@
         </header>
         <main class="page__main">
             <h1>Pokémons</h1>
-            <ul class="pokemon-list"></ul>
+            <div class="container-fluid">
+                <ul class="pokemon-list row"></ul>
+            </div>
         </main>
         <!-- Bootstrap Modal -->
         <div class="modal fade" id="pokemonModal" tabindex="-1" role="dialog" aria-labelledby="pokemonModalLabel" aria-hidden="true">
@@ -60,8 +62,8 @@
                         ...
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" onclick="modal.showPreviousPokemon()">Previous</button>
-                        <button type="button" class="btn btn-secondary" onclick="modal.showNextPokemon()">Next</button>
+                        <button type="button" class="btn btn-secondary" onclick="modal.showPreviousPokemon()">&larr; Previous</button>
+                        <button type="button" class="btn btn-secondary" onclick="modal.showNextPokemon()">Next &rarr;</button>
                     </div>
                 </div>
             </div>
