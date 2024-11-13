@@ -1,5 +1,7 @@
 :root {
 	--blue: #3A599C;
+	--darkblue: #2A4173;
+	--darkerblue: #16203D;
 	--yellow: #ffd014;
 	--red: #ea3a30;
 	--black: #111;
@@ -26,19 +28,25 @@ body {
 	text-align: center;
 }
 
-h1 {
+h1,
+.modal-title {
 	color: var(--black);
 	text-transform: uppercase;
 	text-align: right;
 	padding: 0 var(--standard-padding);
 }
-
+.modal-title {
+	font-family: var(--title);
+}
 main {
 	max-width: 1200px;
 	width: 100%;
 	margin: 0 auto;
 }
 
+.pokemon-list {
+	padding-left: 0;
+}
 .button-class {
 	background-color: var(--blue);
 	padding: var(--standard-padding);
@@ -63,10 +71,21 @@ main {
 	font-size: 25px;
 }
 
-/* Media Queries*/
-
-@media all and (max-width: 992px) {
-	h1 {
-		text-align: center;
-	}
+/* Modal Styling */
+.modal-content {
+	border: 10px solid var(--yellow);
 }
+
+.btn-secondary {
+	background: var(--blue);
+}
+.btn-secondary:hover,
+.btn-secondary:focus {
+	background: var(--darkblue);
+
+}
+.btn-secondary:active {
+	background: var(--darkerblue);
+
+}
+/* Media Queries*/
