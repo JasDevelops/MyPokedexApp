@@ -245,7 +245,7 @@ function sortPokemon(criteria) {
 
     const pokemonsListItem = document.querySelector('.pokemon-list');
     pokemonsListItem.innerHTML = ''; // Ensure this targets only the list, not the header
-    
+
     sortedList.forEach((pokemon) => pokemonRepository.addListItem(pokemon, criteria === 'height'));
   });
 }
