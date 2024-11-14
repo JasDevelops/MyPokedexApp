@@ -39,8 +39,8 @@ let pokemonRepository = (function () {
 
         addListenerToButton(button, pokemon); // function addListenerTo Button is called and passed with the 2 arguments (button, pokemon)
 
-        button.setAttribute('data-toggle', 'modal');
-        button.setAttribute('data-target', '#pokemonModal');
+        button.setAttribute('data-bs-toggle', 'modal');
+        button.setAttribute('data-bs-target', '#pokemonModal');
 
         listItemPokemon.appendChild(button); // Append button to list item 
         pokemonsList.appendChild(listItemPokemon); // Append list item to ul
@@ -49,7 +49,7 @@ let pokemonRepository = (function () {
     // Function to show Pokémon details (pokemon as argument)
     function showDetails(pokemon) {
         let pokemonList = getAll();
-        let index = pokemonList.indexOf(pokemon);
+        let index = pokemonList.indexOf(pokemon); // Keep track of current pokémon
         loadDetails(pokemon).then(function () {
             modal.showModal(pokemon.name, pokemon.height, pokemon.imageUrl, index);
         });
@@ -117,7 +117,7 @@ let pokemonRepository = (function () {
     }
 })();
 
-// Bootstrap Modal IIFE to show/hide modal with Pokémons name, height and image 
+// Bootstrap Modal IIFE 
 let modal = (function () {
     let currentIndex = 0; // current displayed Pokémon index
 
@@ -132,10 +132,13 @@ let modal = (function () {
     `;
         currentIndex = index; // Track current Pokémon index
 
-        $('#pokemonModal').modal('show'); // Bootstrap function to show modal
+        // Bootstrap  5 function to show modal
+    let modalItem = document.getElementById('pokemonModal');
+    let bootstrapModal = new bootstrap.Modal(modalItem);
+    bootstrapModal.show();
     }
 
-    //swipe functionality
+    //next/previous functionality
     function showNextPokemon() {
         let nextIndex = (currentIndex + 1) % pokemonRepository.getAll().length;
         let nextPokemon = pokemonRepository.getAll()[nextIndex];
@@ -163,27 +166,29 @@ let modal = (function () {
     }
     // close when ESC-key is pressed
     function closeOnEscape(event) {
-        if (event.key === 'Escape' && $('#pokemonModal').hasClass('show')) {
-            $('#pokemonModal').modal('hide');
+        if (event.key === 'Escape') {
+            let modalItem = document.getElementById('pokemonModal');
+            let bootstrapModal = bootstrap.Modal.getInstance(modalItm);
+            bootstrapModal.hide() ;
         }
     }
     // Add swipe and ESC event listeners
     function addModalEventListeners() {
-        const modal = document.querySelector('.modal');
-        modal.addEventListener('pointerdown', handlePointerDown);
-        modal.addEventListener('pointerup', handlePointerUp);
+        const modalItem = document.querySelector('.modal');
+        modalItem.addEventListener('pointerdown', handlePointerDown);
+        modalItem.addEventListener('pointerup', handlePointerUp);
         window.addEventListener('keydown', closeOnEscape);
     }
 
     function removeModalEventListeners() {
-        const modal = document.querySelector('.modal');
-        modal.removeEventListener('pointerdown', handlePointerDown);
-        modal.removeEventListener('pointerup', handlePointerUp);
+        const modalItem = document.querySelector('.modal');
+        modalItem.removeEventListener('pointerdown', handlePointerDown);
+        modalItem.removeEventListener('pointerup', handlePointerUp);
         window.removeEventListener('keydown', closeOnEscape);
     }
 
-    $('#pokemonModal').on('shown.bs.modal', addModalEventListeners);
-    $('#pokemonModal').on('hidden.bs.modal', removeModalEventListeners);
+    document.getElementById('pokemonModal').addEventListener('shown.bs.modal', addModalEventListeners);
+    document.getElementById('pokemonModal').addEventListener('hidden.bs.modal', removeModalEventListeners);
 
     return {
         showModal: showModal,
