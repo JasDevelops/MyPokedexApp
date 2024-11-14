@@ -150,9 +150,10 @@ let modal = (function () {
   function showModal(title, height, imageUrl, index) {
     let modalTitle = document.querySelector('.modal-title');
     let modalBody = document.querySelector('.modal-body');
+    let modalItem = document.getElementById('pokemonModal');
 
     modalTitle.innerText = title;
-    
+
     // Clear the modal body
     modalBody.textContent = ''; // This removes existing content safely
 
@@ -171,9 +172,9 @@ let modal = (function () {
 
     currentIndex = index;
 
-    let modalItem = document.getElementById('pokemonModal');
-    let bootstrapModal = new bootstrap.Modal(modalItem);
     cleanUpBackdrops(); // Clean up lingering backdrops
+
+    let bootstrapModal = new bootstrap.Modal(modalItem);
 
     modalItem.addEventListener('hidden.bs.modal', cleanUpBackdrops);
     bootstrapModal.show();
@@ -181,12 +182,16 @@ let modal = (function () {
 
   function showNextPokemon() {
     let pokemonList = pokemonRepository.getAll();
+    if (!pokemonList.length) return;
+
     currentIndex = (currentIndex + 1) % pokemonList.length;
     pokemonRepository.showDetails(pokemonList[currentIndex]);
   }
 
   function showPreviousPokemon() {
     let pokemonList = pokemonRepository.getAll();
+    if (!pokemonList.length) return;
+
     currentIndex = (currentIndex - 1 + pokemonList.length) % pokemonList.length;
     pokemonRepository.showDetails(pokemonList[currentIndex]);
   }
