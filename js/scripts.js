@@ -152,10 +152,23 @@ let modal = (function () {
     let modalBody = document.querySelector('.modal-body');
 
     modalTitle.innerText = title;
-    modalBody.innerHTML = `
-        <p>Height: ${height}</p>
-        <img src="${imageUrl}" alt="${title}">
-      `;
+    
+    // Clear the modal body
+    modalBody.textContent = ''; // This removes existing content safely
+
+    // Create paragraph element for height
+    const heightParagraph = document.createElement('p');
+    heightParagraph.textContent = `Height: ${height}`;
+
+    // Create image element
+    const image = document.createElement('img');
+    image.src = imageUrl;
+    image.alt = title;
+
+    // Append elements to modalBody
+    modalBody.appendChild(heightParagraph);
+    modalBody.appendChild(image);
+
     currentIndex = index;
 
     let modalItem = document.getElementById('pokemonModal');
