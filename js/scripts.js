@@ -28,13 +28,14 @@ let pokemonRepository = (function () {
         });
     }
     // Function to create list items with Pokémon details including a button that displays the name
-    function addListItem(pokemon) {
+    function addListItem(pokemon, showHeight = false) {
         let pokemonsList = document.querySelector('.pokemon-list'); // ul-element
         let listItemPokemon = document.createElement('li'); // li-element
         let button = document.createElement('button'); // button for aech pokémon
 
         button.innerText = pokemon.name; // Text of Button is = name of Pokémon
         button.classList.add('button-class', 'list-group-item', 'list-group-item-action', 'btn', 'btn-primary'); // Add list-group class to list
+
         listItemPokemon.classList.add('list-group', 'col-lg-4', 'col-md-6', 'col-12'); // Add list-group-item-class to list, 3 col for large, 2 for medium, 1 for small screens
 
         addListenerToButton(button, pokemon); // function addListenerTo Button is called and passed with the 2 arguments (button, pokemon)
@@ -43,6 +44,15 @@ let pokemonRepository = (function () {
         button.setAttribute('data-bs-target', '#pokemonModal');
 
         listItemPokemon.appendChild(button); // Append button to list item 
+
+        // display height only if sorted by height
+
+        if (showHeight) {
+            let heightInfo = document.createElement('p'); // <p> to display height below name
+            heightInfo.innerText = `Height: ${pokemon.height}`; // Add height info
+            heightInfo.classList.add('pokemon-height'); // Aadd a class for styling
+            listItemPokemon.appendChild(heightInfo); // Append height info
+        }
         pokemonsList.appendChild(listItemPokemon); // Append list item to ul
     }
 
@@ -223,8 +233,8 @@ function sortPokemon(criteria) {
 
         //clear and re-render sorted List
         const pokemonListItem = document.querySelector('.pokemon-list');
-        pokemonListItem.innerHTML = '';
-        sortedList.forEach(pokemon => pokemonRepository.addListItem(pokemon)); // Displays sorted Pokémon
+        pokemonListItem.innerHTML = ''; // clears existing list
+        sortedList.forEach(pokemon => pokemonRepository.addListItem(pokemon, criteria === 'height')); // Displays sorted Pokémon
     });
 }
 // Event listener for dropdown-items

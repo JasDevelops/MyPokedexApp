@@ -6,6 +6,7 @@
 	--red: #ea3a30;
 	--black: #111;
 	--white: #eee;
+	--gray: #777;
 	--verywhite: #fff;
 	--title: Anta, sans-serif;
 	--body: "Tilt Neon", sans-serif;
@@ -63,7 +64,7 @@ main {
 	font-family: var(--title);
 	font-size: var(--h2);
 	text-transform: uppercase;
-	margin: var(--standard-margin) auto;
+	margin: var(--standard-margin) auto 0;
 	color: var(--yellow);
 	font-weight: 900;
 	cursor: pointer;
@@ -96,4 +97,7 @@ main {
 	background: var(--darkerblue);
 
 }
-
+/* sort by height */
+.pokemon-height {
+	color: var(--gray);
+}
