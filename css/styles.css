@@ -35,9 +35,12 @@ h1,
 	text-align: right;
 	padding: 0 var(--standard-padding);
 }
-.modal-title {
-	font-family: var(--title);
-}
+/* Search form */
+.searchbox .form-control::placeholder {
+	font-size: 14px;
+	font-style: italic;
+} 
+/* Main Content */
 main {
 	max-width: 1200px;
 	width: 100%;
@@ -71,6 +74,9 @@ main {
 }
 
 /* Modal Styling */
+.modal-title {
+	font-family: var(--title);
+}
 .modal-content {
 	border: 10px solid var(--yellow);
 }
@@ -87,4 +93,4 @@ main {
 	background: var(--darkerblue);
 
 }
-/* Media Queries*/
+
