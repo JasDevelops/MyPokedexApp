@@ -132,22 +132,27 @@ let modal = (function () {
         currentIndex = index; // Track current Pokémon index
 
         // Bootstrap  5 function to show modal
-    let modalItem = document.getElementById('pokemonModal');
-    let bootstrapModal = new bootstrap.Modal(modalItem);
-    bootstrapModal.show();
+        let modalItem = document.getElementById('pokemonModal');
+        let bootstrapModal = bootstrap.Modal.getInstance(modalItem);
+
+        cleanUpBackdrops(); // Cleans lingering backdrops before showing
+
+        modalItem.addEventListener('hidden.bs.modal', cleanUpBackdrops);
+
+        bootstrapModal.show(); // Correct placement
     }
 
     //next/previous functionality
     function showNextPokemon() {
-        let nextIndex = (currentIndex + 1) % pokemonRepository.getAll().length;
-        let nextPokemon = pokemonRepository.getAll()[nextIndex];
-        pokemonRepository.showDetails(nextPokemon); // Reuse showDetails to update modal
+        let pokemonList = pokemonRepository.getAll();
+        currentIndex = (currentIndex + 1) % pokemonList.length;
+        pokemonRepository.showDetails(pokemonList[currentIndex]);
     }
 
     function showPreviousPokemon() {
-        let prevIndex = (currentIndex - 1 + pokemonRepository.getAll().length) % pokemonRepository.getAll().length;
-        let prevPokemon = pokemonRepository.getAll()[prevIndex];
-        pokemonRepository.showDetails(prevPokemon); // Reuse showDetails to update modal
+        let pokemonList = pokemonRepository.getAll();
+        currentIndex = (currentIndex - 1 + pokemonList.length) % pokemonList.length;
+        pokemonRepository.showDetails(pokemonList[currentIndex]);
     }
 
     function handlePointerDown(event) {
@@ -157,6 +162,7 @@ let modal = (function () {
     function handlePointerUp(event) {
         let endX = event.clientX;
         let threshold = 50;
+
         if (endX < this.startX - threshold) {
             showNextPokemon();
         } else if (endX > this.startX + threshold) {
@@ -167,27 +173,26 @@ let modal = (function () {
     function closeOnEscape(event) {
         if (event.key === 'Escape') {
             let modalItem = document.getElementById('pokemonModal');
-            let bootstrapModal = bootstrap.Modal.getInstance(modalItm);
-            bootstrapModal.hide() ;
+            let bootstrapModal = bootstrap.Modal.getInstance(modalItem);
+            if (bootstrapModal) {
+                bootstrapModal.hide(); // Hides the modal
+            }
         }
     }
     // Add swipe and ESC event listeners
-    function addModalEventListeners() {
+    document.getElementById('pokemonModal').addEventListener('shown.bs.modal', function () {
         const modalItem = document.querySelector('.modal');
         modalItem.addEventListener('pointerdown', handlePointerDown);
         modalItem.addEventListener('pointerup', handlePointerUp);
         window.addEventListener('keydown', closeOnEscape);
-    }
+    });
 
-    function removeModalEventListeners() {
+    document.getElementById('pokemonModal').addEventListener('hidden.bs.modal', function () {
         const modalItem = document.querySelector('.modal');
         modalItem.removeEventListener('pointerdown', handlePointerDown);
         modalItem.removeEventListener('pointerup', handlePointerUp);
         window.removeEventListener('keydown', closeOnEscape);
-    }
-
-    document.getElementById('pokemonModal').addEventListener('shown.bs.modal', addModalEventListeners);
-    document.getElementById('pokemonModal').addEventListener('hidden.bs.modal', removeModalEventListeners);
+    });
 
     return {
         showModal: showModal,
@@ -198,20 +203,47 @@ let modal = (function () {
 // Search function
 document.getElementById('search-button').addEventListener('click', function () {
     const searchInput = document.getElementById('search-input').value.trim().toLowerCase(); // User input, removing accidental spaces and including lowercase
-    const foundPokemon = pokemonRepository.getAll().find(pokemon => pokemon.name.toLowerCase()=== searchInput
-); // loops through Pokémon list to find match 
-if(foundPokemon) {
-    pokemonRepository.showDetails(foundPokemon); // shows modal for found Pokémon
-} else {
-    alert ('Hmm, nothing here... perhaps it used Teleport!') // alert message
-}
+    const foundPokemon = pokemonRepository.getAll().find(pokemon => pokemon.name.toLowerCase() === searchInput
+    ); // loops through Pokémon list to find match 
+    if (foundPokemon) {
+        pokemonRepository.showDetails(foundPokemon); // shows modal for found Pokémon
+    } else {
+        alert('Hmm, nothing here... perhaps it used Teleport!') // alert message
+    }
 });
+// sorting - function
+function sortPokemon(criteria) {
+    Promise.all(pokemonRepository.getAll().map(pokemon => pokemonRepository.loadDetails(pokemon))).then(() => {
+        let sortedList = pokemonRepository.getAll();
+        if (criteria === 'name') {
+            sortedList.sort((a, b) => a.name.localeCompare(b.name)); // sort alphabetically
+        } else if (criteria === 'height') {
+            sortedList.sort((a, b) => a.height - b.height); // sort numerically
+        }
+
+        //clear and re-render sorted List
+        const pokemonListItem = document.querySelector('.pokemon-list');
+        pokemonListItem.innerHTML = '';
+        sortedList.forEach(pokemon => pokemonRepository.addListItem(pokemon)); // Displays sorted Pokémon
+    });
+}
+// Event listener for dropdown-items
+document.querySelectorAll('.dropdown-item').forEach(item => {
+    item.addEventListener('click', function (event) {
+        event.preventDefault(); // Prevents default link behavior
+        const sortCriteria = this.getAttribute('data-sort'); // Gets sorting criteria
+        sortPokemon(sortCriteria); // Calls  sorting function
+    });
+});
+
 // filter() - function : filter by name
 function findName(nameList, nameSearched) {
     return nameList.filter((addPokemon) =>
         addPokemon.name.toLowerCase().includes(nameSearched.toLowerCase())
     );
 }
+
+// load inital List
 pokemonRepository.loadList().then(function () {
     pokemonRepository.getAll().forEach(function (pokemon) {
         pokemonRepository.addListItem(pokemon);
