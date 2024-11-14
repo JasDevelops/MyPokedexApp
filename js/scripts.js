@@ -80,7 +80,7 @@ let pokemonRepository = (function () {
     showLoadingMessage(); // Show loading message
     return fetch(apiUrl)
       .then((response) => {
-        hideLoadingMessage(); // Hide loading message once response is received
+        if (!response.ok) throw new Error('Failed to fetch Pokemon list');
         return response.json();
       })
       .then((json) => {
@@ -92,10 +92,8 @@ let pokemonRepository = (function () {
           add(pokemon); // Add each Pokemon to the list
         });
       })
-      .catch((e) => {
-        hideLoadingMessage(); // Hide loading message in case of an error
-        console.error(e);
-      });
+      .catch(showErrorMessage) // showErrorMessage handles UI and log
+      .finally(hideLoadingMessage); // Using finally to ensure cleanup
   }
 
   // Fetch details for a specific Pokemon
@@ -103,25 +101,25 @@ let pokemonRepository = (function () {
     showLoadingMessage();
     return fetch(pokemon.detailsUrl)
       .then((response) => {
-        hideLoadingMessage();
+        if (!response.ok) throw new Error('Failed to fetch Pokemon details');
         return response.json();
       })
       .then((details) => {
         pokemon.imageUrl = details.sprites.front_default;
         pokemon.height = details.height;
       })
-      .catch((e) => {
-        hideLoadingMessage();
-        console.error(e);
-      });
+      .catch(showErrorMessage) // showErrorMessage handles UI and log
+      .finally(hideLoadingMessage); // Using finally to ensure cleanup
   }
 
   // Show a loading message
   function showLoadingMessage() {
-    let loadingMessage = document.createElement('p');
-    loadingMessage.innerText = 'Hold tight, Trainer! Rare finds take time!';
-    loadingMessage.classList.add('loading-message');
-    document.body.appendChild(loadingMessage);
+    if (!document.querySelector('.loading-message')) {
+      let loadingMessage = document.createElement('p');
+      loadingMessage.innerText = 'Hold tight, Trainer! Rare finds take time!';
+      loadingMessage.classList.add('loading-message');
+      document.body.appendChild(loadingMessage);
+    }
   }
 
   // Hide the loading message
@@ -132,6 +130,16 @@ let pokemonRepository = (function () {
     }
   }
 
+  // Show error message
+  function showErrorMessage(error) {
+    hideLoadingMessage(); // Clear loading message
+    let errorMessage = document.createElement('p');
+    errorMessage.innerText = `Error: ${error.message || 'Something went wrong!'}`;
+    errorMessage.classList.add('error-message');
+    document.body.appendChild(errorMessage);
+
+    setTimeout(() => errorMessage.remove(), 5000); // Auto-remove the error message after 5 seconds
+  }
   // Make methods accessible outside of the function
   return {
     getAll,
@@ -165,6 +173,7 @@ let modal = (function () {
     const image = document.createElement('img');
     image.src = imageUrl;
     image.alt = title;
+    image.loading = 'lazy';
 
     // Append elements to modalBody
     modalBody.appendChild(heightParagraph);
@@ -172,7 +181,7 @@ let modal = (function () {
 
     currentIndex = index;
 
-    cleanUpBackdrops(); // Clean up lingering backdrops
+    cleanUpBackdrops(); // Clean up lingering backdrops (I had an issue with lingering backdrops)
 
     let bootstrapModal = new bootstrap.Modal(modalItem);
 
@@ -234,9 +243,9 @@ function sortPokemon(criteria) {
       sortedList.sort((a, b) => a.height - b.height);
     }
 
-    const pokemonListItem = document.querySelector('.pokemon-list');
-    pokemonListItem.innerHTML = ''; // Clear existing list
-
+    const pokemonsListItem = document.querySelector('.pokemon-list');
+    pokemonsListItem.innerHTML = ''; // Ensure this targets only the list, not the header
+    
     sortedList.forEach((pokemon) => pokemonRepository.addListItem(pokemon, criteria === 'height'));
   });
 }
