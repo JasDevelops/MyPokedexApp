@@ -105,7 +105,6 @@ let pokemonRepository = (function () {
             loadingMessage.remove(); // removes element from the DOM
         }
     }
-
     // make them accessible from outside of the function
     return {
         getAll: getAll,
@@ -196,7 +195,17 @@ let modal = (function () {
         showPreviousPokemon: showPreviousPokemon
     };
 })();
-
+// Search function
+document.getElementById('search-button').addEventListener('click', function () {
+    const searchInput = document.getElementById('search-input').value.trim().toLowerCase(); // User input, removing accidental spaces and including lowercase
+    const foundPokemon = pokemonRepository.getAll().find(pokemon => pokemon.name.toLowerCase()=== searchInput
+); // loops through Pokémon list to find match 
+if(foundPokemon) {
+    pokemonRepository.showDetails(foundPokemon); // shows modal for found Pokémon
+} else {
+    alert ('Hmm, nothing here... perhaps it used Teleport!') // alert message
+}
+});
 // filter() - function : filter by name
 function findName(nameList, nameSearched) {
     return nameList.filter((addPokemon) =>

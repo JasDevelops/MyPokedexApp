@@ -40,6 +40,9 @@ h1,
 	font-size: 14px;
 	font-style: italic;
 } 
+.input-group-text {
+	text-align: right;
+}
 /* Main Content */
 main {
 	max-width: 1200px;
