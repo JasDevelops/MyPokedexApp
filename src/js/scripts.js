@@ -161,16 +161,12 @@ let modal = (function () {
     let modalItem = document.getElementById('pokemonModal');
 
     modalTitle.innerText = title;
+    modalBody.textContent = ''; // clears modalBody content
 
-    // Clear the modal body
-    modalBody.textContent = ''; // This removes existing content safely
-
-    // Create paragraph element for height
-    const heightParagraph = document.createElement('p');
+    const heightParagraph = document.createElement('p'); // Creates paragraph element for height
     heightParagraph.textContent = `Height: ${height}`;
 
-    // Create image element
-    const image = document.createElement('img');
+    const image = document.createElement('img'); // Creates image element
     image.src = imageUrl;
     image.alt = title;
     image.loading = 'lazy';
@@ -181,12 +177,22 @@ let modal = (function () {
 
     currentIndex = index;
 
-    cleanUpBackdrops(); // Clean up lingering backdrops (I had an issue with lingering backdrops)
+    // Clean up lingering backdrops (I had an issue with lingering backdrops)
+    function cleanUpBackdrops() {
+      
+      let backdrops = document.querySelectorAll('.modal-backdrop');// Removes the backdrop element
+      backdrops.forEach((backdrop) => backdrop.remove());
+      document.body.classList.remove('modal-open'); // Ensures the 'modal-open' class is removed from the body
+      document.documentElement.classList.remove('modal-open'); // account for edge cases
+      window.scrollTo(0, 0); // Resets the scroll position to the top
+    }
 
-    let bootstrapModal = new bootstrap.Modal(modalItem);
-
-    modalItem.addEventListener('hidden.bs.modal', cleanUpBackdrops);
-    bootstrapModal.show();
+    modalItem.addEventListener('hidden.bs.modal', function () { // Event listener for when the modal is fully hidden
+      cleanUpBackdrops(); // Ensures cleanup after modal is fully hidden
+    });
+    document.getElementById('search-input').value = ''; // clears search input
+    let modal = new bootstrap.Modal(modalItem);
+    modal.show(); // Manually triggers the modal
   }
   function showNextPokemon() {
     let pokemonList = pokemonRepository.getAll();
@@ -202,11 +208,6 @@ let modal = (function () {
 
     currentIndex = (currentIndex - 1 + pokemonList.length) % pokemonList.length;
     pokemonRepository.showDetails(pokemonList[currentIndex]);
-  }
-
-  function cleanUpBackdrops() {
-    let backdrops = document.querySelectorAll('.modal-backdrop');
-    backdrops.forEach((backdrop) => backdrop.remove());
   }
 
   return {
