@@ -154,11 +154,15 @@ let pokemonRepository = (function () {
 // Bootstrap Modal IIFE
 let modal = (function () {
   let currentIndex = 0; // Current displayed Pokemon index
+  let modalItem = document.getElementById('pokemonModal');
+  let modalInstance;
 
   function showModal(title, height, imageUrl, index) {
     let modalTitle = document.querySelector('.modal-title');
     let modalBody = document.querySelector('.modal-body');
-    let modalItem = document.getElementById('pokemonModal');
+
+    let existingBackdrops = document.querySelectorAll('.modal-backdrop'); //  Removes any lingering backdrops before opening a new modal
+    existingBackdrops.forEach((backdrop) => backdrop.remove());
 
     modalTitle.innerText = title;
     modalBody.textContent = ''; // clears modalBody content
@@ -177,9 +181,17 @@ let modal = (function () {
 
     currentIndex = index;
 
+  // If there's an existing modal instance, hide it before opening the new one
+  if (modalInstance) {
+    modalInstance.hide();
+  }
+
+  // Create and show new modal
+  modalInstance = new bootstrap.Modal(modalItem);
+  modalInstance.show();// Manually triggers the modal
+}
     // Clean up lingering backdrops (I had an issue with lingering backdrops)
     function cleanUpBackdrops() {
-      
       let backdrops = document.querySelectorAll('.modal-backdrop');// Removes the backdrop element
       backdrops.forEach((backdrop) => backdrop.remove());
       document.body.classList.remove('modal-open'); // Ensures the 'modal-open' class is removed from the body
@@ -187,13 +199,8 @@ let modal = (function () {
       window.scrollTo(0, 0); // Resets the scroll position to the top
     }
 
-    modalItem.addEventListener('hidden.bs.modal', function () { // Event listener for when the modal is fully hidden
-      cleanUpBackdrops(); // Ensures cleanup after modal is fully hidden
-    });
     document.getElementById('search-input').value = ''; // clears search input
-    let modal = new bootstrap.Modal(modalItem);
-    modal.show(); // Manually triggers the modal
-  }
+
   function showNextPokemon() {
     let pokemonList = pokemonRepository.getAll();
     if (!pokemonList.length) return;
@@ -210,6 +217,9 @@ let modal = (function () {
     pokemonRepository.showDetails(pokemonList[currentIndex]);
   }
 
+  modalItem.addEventListener('hidden.bs.modal', function () { // Event listener for when the modal is fully hidden
+    cleanUpBackdrops(); // cleans backdrops after beinh hidden
+});
   return {
     showModal,
     showNextPokemon,
