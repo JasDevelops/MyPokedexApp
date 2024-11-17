@@ -181,25 +181,25 @@ let modal = (function () {
 
     currentIndex = index;
 
-  // If there's an existing modal instance, hide it before opening the new one
-  if (modalInstance) {
-    modalInstance.hide();
-  }
-
-  // Create and show new modal
-  modalInstance = new bootstrap.Modal(modalItem);
-  modalInstance.show();// Manually triggers the modal
-}
-    // Clean up lingering backdrops (I had an issue with lingering backdrops)
-    function cleanUpBackdrops() {
-      let backdrops = document.querySelectorAll('.modal-backdrop');// Removes the backdrop element
-      backdrops.forEach((backdrop) => backdrop.remove());
-      document.body.classList.remove('modal-open'); // Ensures the 'modal-open' class is removed from the body
-      document.documentElement.classList.remove('modal-open'); // account for edge cases
-      window.scrollTo(0, 0); // Resets the scroll position to the top
+    // If there's an existing modal instance, hide it before opening the new one
+    if (modalInstance) {
+      modalInstance.hide();
     }
 
-    document.getElementById('search-input').value = ''; // clears search input
+    // Create and show new modal
+    modalInstance = new bootstrap.Modal(modalItem);
+    modalInstance.show(); // Manually triggers the modal
+  }
+  // Clean up lingering backdrops (I had an issue with lingering backdrops)
+  function cleanUpBackdrops() {
+    let backdrops = document.querySelectorAll('.modal-backdrop'); // Removes the backdrop element
+    backdrops.forEach((backdrop) => backdrop.remove());
+    document.body.classList.remove('modal-open'); // Ensures the 'modal-open' class is removed from the body
+    document.documentElement.classList.remove('modal-open'); // account for edge cases
+    window.scrollTo(0, 0); // Resets the scroll position to the top
+  }
+
+  document.getElementById('search-input').value = ''; // clears search input
 
   function showNextPokemon() {
     let pokemonList = pokemonRepository.getAll();
@@ -217,9 +217,10 @@ let modal = (function () {
     pokemonRepository.showDetails(pokemonList[currentIndex]);
   }
 
-  modalItem.addEventListener('hidden.bs.modal', function () { // Event listener for when the modal is fully hidden
+  modalItem.addEventListener('hidden.bs.modal', function () {
+    // Event listener for when the modal is fully hidden
     cleanUpBackdrops(); // cleans backdrops after beinh hidden
-});
+  });
   return {
     showModal,
     showNextPokemon,
@@ -233,7 +234,8 @@ pokemonRepository.loadList().then(function () {
     pokemonRepository.addListItem(pokemon);
   });
 });
-// Search functionality
+
+// Search function
 document.getElementById('search-input').addEventListener('input', function (event) {
   //triggers input event, when something is typed into the input field
   const searchInput = event.target.value.trim().toLowerCase(); // Takes input (event.target.value), trim whitespace, convert to lowercase
@@ -285,8 +287,9 @@ function showSuggestions(str) {
 document.addEventListener('click', function (event) {
   const searchInput = document.getElementById('search-input');
   const searchSuggestion = document.getElementById('search-suggestion');
-  
-  if (!searchInput.contains(event.target) && !searchSuggestion.contains(event.target)) { // Checks if click was outside of the search input and suggestion box
+
+  if (!searchInput.contains(event.target) && !searchSuggestion.contains(event.target)) {
+    // Checks if click was outside of the search input and suggestion box
     searchSuggestion.style.display = 'none'; // Hides the suggestions list
   }
 });

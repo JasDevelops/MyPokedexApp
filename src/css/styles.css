@@ -9,7 +9,7 @@
   --gray: #777;
   --verywhite: #fff;
   --title: Anta, sans-serif;
-  --body: "Tilt Neon", sans-serif;
+  --body: 'Tilt Neon', sans-serif;
   --text: 16px;
   --h1: 35px;
   --h2: 24px;
@@ -25,24 +25,68 @@ body {
   font-family: var(--body);
   font-size: var(--text);
   font-weight: 100;
-  background-color: var(--verywhite);
   text-align: center;
 }
-
+#search-suggestion,
+body {
+  background-color: var(--verywhite);
+}
+.button-class,
+.modal-title {
+  font-family: var(--title);
+}
+.button-class,
+.modal-content {
+  border: 10px solid var(--yellow);
+}
 h1,
 .modal-title {
   color: var(--black);
   text-transform: uppercase;
-  text-align: right;
   padding: 0 var(--standard-padding);
 }
+.input-group-text,
+.modal-title,
+h1 {
+  text-align: right;
+}
 /* Search form */
+.searchbox {
+  position: relative;
+  width: auto;
+}
 .searchbox .form-control::placeholder {
   font-size: 14px;
   font-style: italic;
 }
-.input-group-text {
-  text-align: right;
+.form-control:focus {
+  border: 1px solid var(--white);
+  box-shadow: none;
+}
+#search-suggestion {
+  text-align: left;
+  overflow-y: auto;
+  border: 1px solid var(--white);
+  padding: 5px;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  left: 0;
+  display: none;
+  z-index: 999;
+}
+#search-suggestion li {
+  color: var(--darkerblue);
+  line-height: 180%;
+}
+#search-suggestion li:last-child {
+  border: none;
+}
+#search-suggestion li:focus,
+#search-suggestion li:hover {
+  cursor: pointer;
+  color: var(--darkblue);
+  background-color: #fafafa;
 }
 /* Main Content */
 main {
@@ -57,18 +101,18 @@ main {
 .button-class {
   background-color: var(--blue);
   padding: var(--standard-padding);
-  border: 10px solid var(--yellow);
   text-align: center;
   vertical-align: middle;
   min-height: 210px;
-  font-family: var(--title);
   font-size: var(--h2);
   text-transform: uppercase;
   margin: var(--standard-margin) auto 0;
   color: var(--yellow);
   font-weight: 900;
   cursor: pointer;
-  transition: border 0.2s ease, font-size 0.2s ease;
+  transition:
+    border 0.2s ease,
+    font-size 0.2s ease;
 }
 
 .button-class:hover,
@@ -78,13 +122,6 @@ main {
 }
 
 /* Modal Styling */
-.modal-title {
-  font-family: var(--title);
-}
-.modal-content {
-  border: 10px solid var(--yellow);
-}
-
 .btn-secondary {
   background: var(--blue);
 }
