@@ -1,6 +1,4 @@
 # JAVASCRIPT APP (MyPokédexApp) *Gotta Code 'Em All!*
-
-## Overview:
 My PokédekApp is a simple JavaScript project, that displays information about Pokémon. It uses PokéAPI to fetch its data and incorporates Bootstrap for styling and responsiveness.
 
 ## Features:
